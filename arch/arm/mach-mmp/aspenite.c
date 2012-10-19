@@ -40,7 +40,9 @@
 #include <plat/pxa_u2o.h>
 #include <plat/pxa3xx_otg.h>
 
-#if defined(CONFIG_SPI_PXA2XX)
+#define KIPR_KOVAN
+
+#if defined(CONFIG_SPI_PXA2XX) && !defined(KIPR_KOVAN)
 #include <linux/spi/spi.h>
 #include <plat/pxa2xx_spi.h>
 #endif
@@ -1014,7 +1016,7 @@ static struct pxa27x_keypad_platform_data aspenite_android_keypad_info __initdat
 	.debounce_interval	= 30,
 };
 
-#if (defined(CONFIG_SPI_PXA2XX) || defined(CONFIG_SPI_PXA2XX_MODULE)) \
+#if (defined(CONFIG_SPI_PXA2XX) || defined(CONFIG_SPI_PXA2XX_MODULE) && !defined(KIPR_KOVAN)) \
 	&& defined(CONFIG_MTD_M25P80)
 
 static struct pxa2xx_spi_master pxa_ssp_master_info = {
