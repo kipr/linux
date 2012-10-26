@@ -1057,7 +1057,7 @@ static void __init aspenite_init_spi(void)
 #else
 static inline void aspenite_init_spi(void) {}
 #endif
-*//
+*/
 static inline void aspenite_init_spi(void) {}
 
 
