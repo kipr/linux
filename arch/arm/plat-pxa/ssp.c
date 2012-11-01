@@ -283,7 +283,8 @@ int ssp_init(struct ssp_dev *dev, u32 port, u32 init_flags)
 		dev->irq = NO_IRQ;
 
 	/* turn on SSP port clock */
-	clk_enable(ssp->clk);
+	printk("orig ssp driver would have enabled the clock  (ssp.c:%d)\n",__LINE__);
+	//clk_enable(ssp->clk);
 	return 0;
 
 out_region:
@@ -303,7 +304,8 @@ void ssp_exit(struct ssp_dev *dev)
 	ssp_disable(dev);
 	if (dev->irq != NO_IRQ)
 		free_irq(dev->irq, dev);
-	clk_disable(ssp->clk);
+	printk("orig ssp driver would have disabled the clock  (ssp.c:%d)\n",__LINE__);
+	//clk_disable(ssp->clk);
 	ssp_free(ssp);
 }
 #endif /* CONFIG_PXA_SSP_LEGACY */
