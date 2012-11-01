@@ -1560,7 +1560,8 @@ static int __init pxa2xx_spi_probe(struct platform_device *pdev)
 	}
 
 	/* Enable SOC clock */
-	clk_enable(ssp->clk);
+	printk("orig spi driver would have disabled the clock  (pxa2xx_spi.c:%d)\n",__LINE__);
+	//clk_enable(ssp->clk);
 
 	/* Load default SSP configuration */
 	write_SSCR0(0, drv_data->ioaddr);
@@ -1601,7 +1602,8 @@ out_error_queue_alloc:
 	destroy_queue(drv_data);
 
 out_error_clock_enabled:
-	clk_disable(ssp->clk);
+printk("orig spi driver would have disabled the clock  (pxa2xx_spi.c:%d)\n",__LINE__);
+//	clk_disable(ssp->clk);
 
 out_error_dma_alloc:
 	if (drv_data->tx_channel != -1)
@@ -1644,7 +1646,8 @@ static int pxa2xx_spi_remove(struct platform_device *pdev)
 
 	/* Disable the SSP at the peripheral and SOC level */
 	write_SSCR0(0, drv_data->ioaddr);
-	clk_disable(ssp->clk);
+	printk("orig spi driver would have disabled the clock  (pxa2xx_spi.c:%d)\n",__LINE__);
+	//clk_disable(ssp->clk);
 
 	/* Release DMA */
 	if (drv_data->master_info->enable_dma) {
@@ -1688,7 +1691,8 @@ static int pxa2xx_spi_suspend(struct device *dev)
 	if (status != 0)
 		return status;
 	write_SSCR0(0, drv_data->ioaddr);
-	clk_disable(ssp->clk);
+	printk("orig spi driver would have disabled the clock  (pxa2xx_spi.c:%d)\n",__LINE__);
+	//clk_disable(ssp->clk);
 
 	return 0;
 }
@@ -1707,7 +1711,8 @@ static int pxa2xx_spi_resume(struct device *dev)
 			DRCMR_MAPVLD | drv_data->tx_channel;
 
 	/* Enable the SSP clock */
-	clk_enable(ssp->clk);
+	printk("orig spi driver would have enabled the clock  (pxa2xx_spi.c:%d)\n",__LINE__);
+	//clk_enable(ssp->clk);
 
 	/* Start the queue running */
 	status = start_queue(drv_data);
