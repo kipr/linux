@@ -48,6 +48,8 @@ MODULE_ALIAS("platform:pxa2xx-spi");
 
 #define MAX_BUSES 3
 
+#define SSCR_PROTOCOL  SSCR0_PSP //SSCR0_Motorola
+
 #define RX_THRESH_DFLT 	8
 #define TX_THRESH_DFLT 	8
 #define TIMOUT_DFLT		1000
@@ -1078,7 +1080,7 @@ static void pump_transfers(unsigned long data)
 		}
 
 		cr0 = clk_div
-			| SSCR0_PSP
+			| SSCR_PROTOCOL
 			| SSCR0_DataSize(bits > 16 ? bits - 16 : bits)
 			| SSCR0_SSE
 			| (bits > 16 ? SSCR0_EDSS : 0);
@@ -1381,7 +1383,7 @@ static int setup(struct spi_device *spi)
 	chip->speed_hz = spi->max_speed_hz;
 
 	chip->cr0 = clk_div
-			| SSCR0_PSP
+			| SSCR_PROTOCOL
 			| SSCR0_DataSize(spi->bits_per_word > 16 ?
 				spi->bits_per_word - 16 : spi->bits_per_word)
 			| SSCR0_SSE
@@ -1647,7 +1649,7 @@ static int __init pxa2xx_spi_probe(struct platform_device *pdev)
 				SSCR1_TxTresh(TX_THRESH_DFLT),
 				drv_data->ioaddr);
 	write_SSCR0(SSCR0_SerClkDiv(2)
-			| SSCR0_PSP
+			| SSCR_PROTOCOL
 			| SSCR0_DataSize(8),
 			drv_data->ioaddr);
 	if (drv_data->ssp_type != PXA25x_SSP)
