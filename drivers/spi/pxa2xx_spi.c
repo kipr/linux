@@ -1645,8 +1645,8 @@ static int __init pxa2xx_spi_probe(struct platform_device *pdev)
 	}
 
 	/* Enable SOC clock */
-	printk("orig spi driver would have disabled the clock  (pxa2xx_spi.c:%d)\n",__LINE__);
-	//clk_enable(ssp->clk);
+	printk("spi driver enabling the clock  (pxa2xx_spi.c:%d)\n",__LINE__);
+	clk_enable(ssp->clk);
 
 	/* Load default SSP configuration */
 	write_SSCR0(0, drv_data->ioaddr);
@@ -1804,8 +1804,8 @@ static int pxa2xx_spi_resume(struct device *dev)
 			DRCMR_MAPVLD | drv_data->tx_channel;
 
 	/* Enable the SSP clock */
-	printk("orig spi driver would have enabled the clock  (pxa2xx_spi.c:%d)\n",__LINE__);
-	//clk_enable(ssp->clk);
+	printk("spi driver enabling the clock  (pxa2xx_spi.c:%d)\n",__LINE__);
+	clk_enable(ssp->clk);
 
 	/* Start the queue running */
 	status = start_queue(drv_data);
