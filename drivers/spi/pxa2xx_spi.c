@@ -48,7 +48,7 @@ MODULE_ALIAS("platform:pxa2xx-spi");
 
 #define MAX_BUSES 3
 
-#define SSCR_PROTOCOL SSCR0_Motorola // (SSCR0_PSP, SSCR0_Motorola, ...)
+#define SSCR_PROTOCOL SSCR0_PSP // (SSCR0_PSP, SSCR0_Motorola, ...)
 
 #define RX_THRESH_DFLT 	8
 #define TX_THRESH_DFLT 	8
