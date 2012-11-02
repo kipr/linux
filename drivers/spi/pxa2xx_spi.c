@@ -58,6 +58,8 @@ MODULE_ALIAS("platform:pxa2xx-spi");
 #define MAX_DMA_LEN		8191
 #define DMA_ALIGNMENT		8
 
+#define SPI_DBG_PRINTKS 1
+
 /*
  * for testing SSCR1 changes that require SSP restart, basically
  * everything except the service and interrupt enables, the pxa270 developer
@@ -181,6 +183,8 @@ static void pump_messages(struct work_struct *work);
 
 static void cs_assert(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     cs_assert (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct chip_data *chip = drv_data->cur_chip;
 
 	if (chip->cs_control) {
@@ -194,6 +198,8 @@ static void cs_assert(struct driver_data *drv_data)
 
 static void cs_deassert(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     cs_deassert (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct chip_data *chip = drv_data->cur_chip;
 
 	if (chip->cs_control) {
@@ -207,6 +213,8 @@ static void cs_deassert(struct driver_data *drv_data)
 
 static int flush(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     flush (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	unsigned long limit = loops_per_jiffy << 1;
 
 	void __iomem *reg = drv_data->ioaddr;
@@ -223,6 +231,8 @@ static int flush(struct driver_data *drv_data)
 
 static int null_writer(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     null_writer (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	void __iomem *reg = drv_data->ioaddr;
 	u8 n_bytes = drv_data->n_bytes;
 
@@ -238,6 +248,8 @@ static int null_writer(struct driver_data *drv_data)
 
 static int null_reader(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     null_reader (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	void __iomem *reg = drv_data->ioaddr;
 	u8 n_bytes = drv_data->n_bytes;
 
@@ -252,6 +264,8 @@ static int null_reader(struct driver_data *drv_data)
 
 static int u8_writer(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     u8_writer (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	void __iomem *reg = drv_data->ioaddr;
 
 	if (((read_SSSR(reg) & 0x00000f00) == 0x00000f00)
@@ -266,6 +280,8 @@ static int u8_writer(struct driver_data *drv_data)
 
 static int u8_reader(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     u8_reader (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	void __iomem *reg = drv_data->ioaddr;
 
 	while ((read_SSSR(reg) & SSSR_RNE)
@@ -279,6 +295,8 @@ static int u8_reader(struct driver_data *drv_data)
 
 static int u16_writer(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     u16_writer (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	void __iomem *reg = drv_data->ioaddr;
 
 	if (((read_SSSR(reg) & 0x00000f00) == 0x00000f00)
@@ -293,6 +311,8 @@ static int u16_writer(struct driver_data *drv_data)
 
 static int u16_reader(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     u16_reader (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	void __iomem *reg = drv_data->ioaddr;
 
 	while ((read_SSSR(reg) & SSSR_RNE)
@@ -306,6 +326,8 @@ static int u16_reader(struct driver_data *drv_data)
 
 static int u32_writer(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     u32_writer (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	void __iomem *reg = drv_data->ioaddr;
 
 	if (((read_SSSR(reg) & 0x00000f00) == 0x00000f00)
@@ -320,6 +342,8 @@ static int u32_writer(struct driver_data *drv_data)
 
 static int u32_reader(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     u32_reader (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	void __iomem *reg = drv_data->ioaddr;
 
 	while ((read_SSSR(reg) & SSSR_RNE)
@@ -333,6 +357,8 @@ static int u32_reader(struct driver_data *drv_data)
 
 static void *next_transfer(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     next_transfer (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct spi_message *msg = drv_data->cur_msg;
 	struct spi_transfer *trans = drv_data->cur_transfer;
 
@@ -349,6 +375,8 @@ static void *next_transfer(struct driver_data *drv_data)
 
 static int map_dma_buffers(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     map_dma_buffers (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct spi_message *msg = drv_data->cur_msg;
 	struct device *dev = &msg->spi->dev;
 	struct spi_transfer *transfer = drv_data->cur_transfer;
@@ -404,6 +432,8 @@ static int map_dma_buffers(struct driver_data *drv_data)
 
 static void unmap_dma_buffers(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     unmap_dma_buffers (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct device *dev;
 
 	if (!drv_data->dma_mapped)
@@ -423,6 +453,8 @@ static void unmap_dma_buffers(struct driver_data *drv_data)
 /* caller already set message->status; dma and pio irqs are blocked */
 static void giveback(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     giveback (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct spi_transfer* last_transfer;
 	unsigned long flags;
 	struct spi_message *msg;
@@ -487,6 +519,8 @@ static void giveback(struct driver_data *drv_data)
 
 static int wait_ssp_rx_stall(void const __iomem *ioaddr)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     wait_ssp_rx_stall (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	unsigned long limit = loops_per_jiffy << 1;
 
 	while ((read_SSSR(ioaddr) & SSSR_BSY) && --limit)
@@ -497,6 +531,8 @@ static int wait_ssp_rx_stall(void const __iomem *ioaddr)
 
 static int wait_dma_channel_stop(int channel)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     wait_dma_channel_stop (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	unsigned long limit = loops_per_jiffy << 1;
 
 	while (!(DCSR(channel) & DCSR_STOPSTATE) && --limit)
@@ -507,6 +543,8 @@ static int wait_dma_channel_stop(int channel)
 
 static void dma_error_stop(struct driver_data *drv_data, const char *msg)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     dma_error_stop (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	void __iomem *reg = drv_data->ioaddr;
 
 	/* Stop and reset */
@@ -529,6 +567,8 @@ static void dma_error_stop(struct driver_data *drv_data, const char *msg)
 
 static void dma_transfer_complete(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     dma_transfer_complete (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	void __iomem *reg = drv_data->ioaddr;
 	struct spi_message *msg = drv_data->cur_msg;
 
@@ -574,6 +614,8 @@ static void dma_transfer_complete(struct driver_data *drv_data)
 
 static void dma_handler(int channel, void *data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     dma_handler (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct driver_data *drv_data = data;
 	u32 irq_status = DCSR(channel) & DMA_INT_MASK;
 
@@ -607,6 +649,8 @@ static void dma_handler(int channel, void *data)
 
 static irqreturn_t dma_transfer(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     dma_transfer (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	u32 irq_status;
 	void __iomem *reg = drv_data->ioaddr;
 
@@ -642,6 +686,8 @@ static irqreturn_t dma_transfer(struct driver_data *drv_data)
 
 static void int_error_stop(struct driver_data *drv_data, const char* msg)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     int_err_stop (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	void __iomem *reg = drv_data->ioaddr;
 
 	/* Stop and reset SSP */
@@ -660,6 +706,8 @@ static void int_error_stop(struct driver_data *drv_data, const char* msg)
 
 static void int_transfer_complete(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     int_transfer_complete (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	void __iomem *reg = drv_data->ioaddr;
 
 	/* Stop SSP */
@@ -685,6 +733,8 @@ static void int_transfer_complete(struct driver_data *drv_data)
 
 static irqreturn_t interrupt_transfer(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     interrupt_transfer (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	void __iomem *reg = drv_data->ioaddr;
 
 	u32 irq_mask = (read_SSCR1(reg) & SSCR1_TIE) ?
@@ -745,6 +795,8 @@ static irqreturn_t interrupt_transfer(struct driver_data *drv_data)
 
 static irqreturn_t ssp_int(int irq, void *dev_id)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     ssp_int (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct driver_data *drv_data = dev_id;
 	void __iomem *reg = drv_data->ioaddr;
 
@@ -771,6 +823,8 @@ static int set_dma_burst_and_threshold(struct chip_data *chip,
 				u8 bits_per_word, u32 *burst_code,
 				u32 *threshold)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     set_dma_burst_and_threshold (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct pxa2xx_spi_chip *chip_info =
 			(struct pxa2xx_spi_chip *)spi->controller_data;
 	int bytes_per_word;
@@ -865,6 +919,8 @@ static int set_dma_burst_and_threshold(struct chip_data *chip,
 
 static unsigned int ssp_get_clk_div(struct ssp_device *ssp, int rate)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     ssp_get_clk_div (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	unsigned long ssp_clk = clk_get_rate(ssp->clk);
 
 	if (ssp->type == PXA25x_SSP)
@@ -875,6 +931,8 @@ static unsigned int ssp_get_clk_div(struct ssp_device *ssp, int rate)
 
 static void pump_transfers(unsigned long data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     pump_transfers (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct driver_data *drv_data = (struct driver_data *)data;
 	struct spi_message *message = NULL;
 	struct spi_transfer *transfer = NULL;
@@ -1129,6 +1187,8 @@ static void pump_transfers(unsigned long data)
 
 static void pump_messages(struct work_struct *work)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     pump_messages (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct driver_data *drv_data =
 		container_of(work, struct driver_data, pump_messages);
 	unsigned long flags;
@@ -1171,6 +1231,8 @@ static void pump_messages(struct work_struct *work)
 
 static int transfer(struct spi_device *spi, struct spi_message *msg)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     transfer (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct driver_data *drv_data = spi_master_get_devdata(spi->master);
 	unsigned long flags;
 
@@ -1198,6 +1260,8 @@ static int transfer(struct spi_device *spi, struct spi_message *msg)
 static int setup_cs(struct spi_device *spi, struct chip_data *chip,
 		    struct pxa2xx_spi_chip *chip_info)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     setup_cs (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	int err = 0;
 
 	if (chip == NULL || chip_info == NULL)
@@ -1235,6 +1299,8 @@ static int setup_cs(struct spi_device *spi, struct chip_data *chip,
 
 static int setup(struct spi_device *spi)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     setup (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct pxa2xx_spi_chip *chip_info = NULL;
 	struct chip_data *chip;
 	struct driver_data *drv_data = spi_master_get_devdata(spi->master);
@@ -1365,6 +1431,8 @@ static int setup(struct spi_device *spi)
 
 static void cleanup(struct spi_device *spi)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     cleanup (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct chip_data *chip = spi_get_ctldata(spi);
 
 	if (!chip)
@@ -1378,6 +1446,8 @@ static void cleanup(struct spi_device *spi)
 
 static int __init init_queue(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     __init_init_queue (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	INIT_LIST_HEAD(&drv_data->queue);
 	spin_lock_init(&drv_data->lock);
 
@@ -1398,6 +1468,8 @@ static int __init init_queue(struct driver_data *drv_data)
 
 static int start_queue(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     start_queue (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	unsigned long flags;
 
 	spin_lock_irqsave(&drv_data->lock, flags);
@@ -1420,6 +1492,8 @@ static int start_queue(struct driver_data *drv_data)
 
 static int stop_queue(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     stop_queue (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	unsigned long flags;
 	unsigned limit = 500;
 	int status = 0;
@@ -1447,6 +1521,8 @@ static int stop_queue(struct driver_data *drv_data)
 
 static int destroy_queue(struct driver_data *drv_data)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     destroy_queue (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	int status;
 
 	status = stop_queue(drv_data);
@@ -1466,6 +1542,8 @@ static int destroy_queue(struct driver_data *drv_data)
 
 static int __init pxa2xx_spi_probe(struct platform_device *pdev)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     pxa2xx_spi_probe (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct device *dev = &pdev->dev;
 	struct pxa2xx_spi_master *platform_info;
 	struct spi_master *master;
@@ -1622,6 +1700,8 @@ out_error_master_alloc:
 
 static int pxa2xx_spi_remove(struct platform_device *pdev)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     pxa2xx_spi_remove (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct driver_data *drv_data = platform_get_drvdata(pdev);
 	struct ssp_device *ssp;
 	int status = 0;
@@ -1674,6 +1754,8 @@ static int pxa2xx_spi_remove(struct platform_device *pdev)
 
 static void pxa2xx_spi_shutdown(struct platform_device *pdev)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     pxa2xx_spi_shutdown (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	int status = 0;
 
 	if ((status = pxa2xx_spi_remove(pdev)) != 0)
@@ -1683,6 +1765,8 @@ static void pxa2xx_spi_shutdown(struct platform_device *pdev)
 #ifdef CONFIG_PM
 static int pxa2xx_spi_suspend(struct device *dev)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     pxa2xx_spi_suspend (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct driver_data *drv_data = dev_get_drvdata(dev);
 	struct ssp_device *ssp = drv_data->ssp;
 	int status = 0;
@@ -1699,6 +1783,8 @@ static int pxa2xx_spi_suspend(struct device *dev)
 
 static int pxa2xx_spi_resume(struct device *dev)
 {
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     pxa2xx_spi_resume (pxa2xx_spi.c:%d)\n",__LINE__);
+
 	struct driver_data *drv_data = dev_get_drvdata(dev);
 	struct ssp_device *ssp = drv_data->ssp;
 	int status = 0;
