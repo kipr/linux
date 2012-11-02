@@ -367,7 +367,7 @@ void fpga_cleanup_module(void)
   gpio_direction_input(120);
   gpio_direction_input(97);
   gpio_direction_input(49);
-  gpio_direction_input(91);
+  //gpio_direction_input(91);
   gpio_direction_input(119);
 
 	/* Get rid of our char dev entries */
@@ -472,8 +472,8 @@ void fpga_init_hw(void) {
   gpio_request(49, "VSync genlock");
   gpio_direction_input(49);
 
-  gpio_request(91, "HPD report");
-  gpio_direction_input(91);
+  //gpio_request(91, "HPD report");
+  //gpio_direction_input(91);
 
   printk("SSP2 clock enable (26 MHz)\n");
   __raw_writel(0x23,(APB_VIRT_BASE + 0x15820));
