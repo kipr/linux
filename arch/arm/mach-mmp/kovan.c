@@ -520,7 +520,6 @@ static void kovan_power_off(void)
 }
 
 
-
 static void __init kovan_init(void)
 {
 	mfp_config(ARRAY_AND_SIZE(kovan_pin_config));
@@ -548,6 +547,7 @@ static void __init kovan_init(void)
 	if(pxa168_add_ssp(4))
 		printk("Unable to add SSP4\n");
 
+	printk("Registering SPI drivers for SSP3 and SSP4\n")
 	spi_register_board_info(kovan_spi_board_info,
 		ARRAY_SIZE(kovan_spi_board_info));
         platform_device_register(&pxa_spi_ssp3);

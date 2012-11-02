@@ -950,7 +950,7 @@ static void pump_transfers(unsigned long data)
 	u32 dma_thresh = drv_data->cur_chip->dma_threshold;
 	u32 dma_burst = drv_data->cur_chip->dma_burst_size;
 
-	if(SPI_DBG_PRINTKS) printk("***_SPI_***     pump_transfers start: SSCR0=%x SSCR1=%x\n (pxa2xx_spi.c:%d)",read_SSCR0(reg), read_SSCR1(reg), __LINE__);
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     pump_transfers start: SSCR0=%x SSCR1=%x (pxa2xx_spi.c:%d)\n",read_SSCR0(reg), read_SSCR1(reg), __LINE__);
 
 
 	/* Get current state information */
@@ -1189,7 +1189,7 @@ static void pump_transfers(unsigned long data)
 	 * requests and interrupts, without changing any mode bits */
 	write_SSCR1(cr1, reg);
 
-	if(SPI_DBG_PRINTKS) printk("***_SPI_***     pump_transfers end: SSCR0=%x SSCR1=%x\n (pxa2xx_spi.c:%d)",read_SSCR0(reg), read_SSCR1(reg), __LINE__);
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     pump_transfers end: SSCR0=%x SSCR1=%x (pxa2xx_spi.c:%d)\n",read_SSCR0(reg), read_SSCR1(reg), __LINE__);
 }
 
 static void pump_messages(struct work_struct *work)
