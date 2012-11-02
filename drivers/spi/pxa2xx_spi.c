@@ -48,7 +48,7 @@ MODULE_ALIAS("platform:pxa2xx-spi");
 
 #define MAX_BUSES 3
 
-#define SSCR_PROTOCOL  SSCR0_PSP //SSCR0_Motorola
+#define SSCR_PROTOCOL SSCR0_Motorola // (SSCR0_PSP, SSCR0_Motorola, ...)
 
 #define RX_THRESH_DFLT 	8
 #define TX_THRESH_DFLT 	8
@@ -950,6 +950,9 @@ static void pump_transfers(unsigned long data)
 	u32 dma_thresh = drv_data->cur_chip->dma_threshold;
 	u32 dma_burst = drv_data->cur_chip->dma_burst_size;
 
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     pump_transfers start: SSCR0=%x SSCR1=%x\n (pxa2xx_spi.c:%d)",read_SSCR0(reg), read_SSCR1(reg), __LINE__);
+
+
 	/* Get current state information */
 	message = drv_data->cur_msg;
 	transfer = drv_data->cur_transfer;
@@ -1185,6 +1188,8 @@ static void pump_transfers(unsigned long data)
 	/* after chip select, release the data by enabling service
 	 * requests and interrupts, without changing any mode bits */
 	write_SSCR1(cr1, reg);
+
+	if(SPI_DBG_PRINTKS) printk("***_SPI_***     pump_transfers end: SSCR0=%x SSCR1=%x\n (pxa2xx_spi.c:%d)",read_SSCR0(reg), read_SSCR1(reg), __LINE__);
 }
 
 static void pump_messages(struct work_struct *work)
