@@ -812,12 +812,18 @@ static void stmpe_irq_unmask(struct irq_data *data)
 	stmpe->ier[regoffset] |= mask;
 }
 
+static void stmpe_irq_ack(struct irq_data *data)
+{
+	return;
+}
+
 static struct irq_chip stmpe_irq_chip = {
 	.name			= "stmpe",
 	.irq_bus_lock		= stmpe_irq_lock,
 	.irq_bus_sync_unlock	= stmpe_irq_sync_unlock,
 	.irq_mask		= stmpe_irq_mask,
 	.irq_unmask		= stmpe_irq_unmask,
+	.irq_ack    = stmpe_irq_ack,
 };
 
 static int __devinit stmpe_irq_init(struct stmpe *stmpe)
