@@ -141,14 +141,14 @@ static unsigned long kovan_pin_config[] __initdata = {
 
 	/* FPGA PSP config */
 	// GPIO90 ssp3_clk should be here
-	MFP_CFG(GPIO91, AF3), /* ssp3_frm */
-	MFP_CFG(GPIO92, AF3), /* ssp3_miso */
-	MFP_CFG(GPIO93, AF3), /* ssp3_mosi */
+	//MFP_CFG(GPIO91, AF3), /* ssp3_frm */
+	//MFP_CFG(GPIO92, AF3), /* ssp3_miso */
+	//MFP_CFG(GPIO93, AF3), /* ssp3_mosi */
 
 	/* FPGA status GPIOs */
-	//MFP_CFG(GPIO91, AF0), /* HPD report */
-	//MFP_CFG(GPIO92, AF0), /* Key ready */
-	//MFP_CFG(GPIO93, AF0), /* Low-voltage alarm */
+	MFP_CFG(GPIO91, AF0), /* HPD report */
+	MFP_CFG(GPIO92, AF0), /* Key ready */
+	MFP_CFG(GPIO93, AF0), /* Low-voltage alarm */
 	MFP_CFG(GPIO79, AF0), /* Battery / ADC8 selection switch */
 	MFP_CFG(GPIO43, AF0), /* AC-present switch */
 
