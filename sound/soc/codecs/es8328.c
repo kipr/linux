@@ -29,6 +29,8 @@
 
 #include "es8328.h"
 
+#define KOVAN 1
+
 struct snd_soc_codec_device soc_codec_dev_es8328;
 
 /*
@@ -390,6 +392,7 @@ static int es8328_add_i2c_device(struct platform_device *pdev,
 #endif
 
 #if defined(CONFIG_SPI_MASTER)
+#ifndef KOVAN
 static int __devinit es8328_spi_probe(struct spi_device *spi)
 {
 	struct snd_soc_device *socdev = es8328_socdev;
@@ -419,6 +422,7 @@ static struct spi_driver es8328_spi_driver = {
 	.probe		= es8328_spi_probe,
 	.remove		= __devexit_p(es8328_spi_remove),
 };
+#endif /* ifndef KOVAN */
 #endif /* CONFIG_SPI_MASTER */
 
 static int es8328_probe(struct platform_device *pdev)
@@ -448,13 +452,14 @@ static int es8328_probe(struct platform_device *pdev)
 	}
 #endif
 #if defined(CONFIG_SPI_MASTER)
+#ifndef KOVAN
 	if (setup->spi) {
 		ret = spi_register_driver(&es8328_spi_driver);
 		if (ret != 0)
 			printk(KERN_ERR "can't add spi driver");
 	}
 #endif
-
+#endif
 	if (ret != 0)
 		kfree(codec);
 
@@ -477,7 +482,9 @@ static int es8328_remove(struct platform_device *pdev)
 	i2c_del_driver(&es8328_i2c_driver);
 #endif
 #if defined(CONFIG_SPI_MASTER)
+#ifndef KOVAN
 	spi_unregister_driver(&es8328_spi_driver);
+#endif
 #endif
 	kfree(codec);
 
