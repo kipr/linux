@@ -547,11 +547,11 @@ static void __init kovan_init(void)
 	if(pxa168_add_ssp(4))
 		printk("Unable to add SSP4\n");
 
-	printk("Registering SPI drivers for SSP3 and SSP4\n");
-	spi_register_board_info(kovan_spi_board_info,
-		ARRAY_SIZE(kovan_spi_board_info));
-        platform_device_register(&pxa_spi_ssp3);
-        platform_device_register(&pxa_spi_ssp4);
+	//printk("Registering SPI drivers for SSP3 and SSP4\n");
+	//spi_register_board_info(kovan_spi_board_info,
+	//	ARRAY_SIZE(kovan_spi_board_info));
+    //    platform_device_register(&pxa_spi_ssp3);
+    //    platform_device_register(&pxa_spi_ssp4);
 
 	pxa168_add_twsi(0, &i2c_info, ARRAY_AND_SIZE(kovan_i2c_board_info));
 	pxa168_add_twsi(1, &i2c_info, ARRAY_AND_SIZE(pwr_i2c_board_info));
