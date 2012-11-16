@@ -13,7 +13,7 @@
 #include <linux/kernel.h>
 #include <linux/platform_device.h>
 #include <linux/i2c.h>
-#include <linux/spi/spi.h>
+//#include <linux/spi/spi.h>
 #include <linux/smc91x.h>
 #include <linux/i2c/pca953x.h>
 #include <linux/card.h>
@@ -469,7 +469,7 @@ static struct platform_device kovan_fpga_device = {
 /*
  * SPI and associated interfaces
  */
-
+/*
 static struct pxa2xx_spi_master pxa_ssp3_spi_master_info = {
 	.num_chipselect	= 1,
 	.enable_dma	= 1,
@@ -510,7 +510,7 @@ static struct spi_board_info kovan_spi_board_info[] __initdata = {
 		.chip_select	= 0,
 	},
 };
-
+*/
 
 
 

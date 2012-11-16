@@ -29,7 +29,7 @@
 
 #include "es8328.h"
 
-#define KOVAN 1
+//#define KOVAN 1
 
 struct snd_soc_codec_device soc_codec_dev_es8328;
 

@@ -41,13 +41,13 @@
 #include <plat/pxa3xx_otg.h>
 
 
-/*
- // JBS
+
+
 #if defined(CONFIG_SPI_PXA2XX)
 #include <linux/spi/spi.h>
 #include <plat/pxa2xx_spi.h>
 #endif
-*/
+
 
 #include "common.h"
 #include <linux/mmc/sdhci.h>
@@ -1018,8 +1018,7 @@ static struct pxa27x_keypad_platform_data aspenite_android_keypad_info __initdat
 	.debounce_interval	= 30,
 };
 
-/**
-// JBS
+
 #if (defined(CONFIG_SPI_PXA2XX) || defined(CONFIG_SPI_PXA2XX_MODULE)) \
 	&& defined(CONFIG_MTD_M25P80)
 
@@ -1057,7 +1056,7 @@ static void __init aspenite_init_spi(void)
 #else
 static inline void aspenite_init_spi(void) {}
 #endif
-*/
+
 static inline void aspenite_init_spi(void) {}
 
 
