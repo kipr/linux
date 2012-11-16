@@ -1057,7 +1057,6 @@ static void __init aspenite_init_spi(void)
 static inline void aspenite_init_spi(void) {}
 #endif
 
-static inline void aspenite_init_spi(void) {}
 
 
 #if defined(CONFIG_SAMSUNG_32G_MLC_NAND)
