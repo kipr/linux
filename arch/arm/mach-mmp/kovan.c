@@ -345,7 +345,7 @@ static struct i2c_board_info pwr_i2c_board_info[] = {
 		I2C_BOARD_INFO("stmpe610", 0x44),
 		.platform_data = &stmpe610_data,
 	},
-
+	
 	/* Audio codec */
 	{
 		I2C_BOARD_INFO("es8328", 0x11),
@@ -355,6 +355,7 @@ static struct i2c_board_info pwr_i2c_board_info[] = {
 
 static struct i2c_pxa_platform_data i2c_info __initdata = {
 	.use_pio		= 1,
+	.fast_mode 		= 1
 };
 
 
